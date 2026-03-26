@@ -65,8 +65,8 @@ html, body, #app {
 .btn-danger   { background: #d32f2f; color: #fff; }
 
 .btn-sm {
-  padding: 6px 10px;
-  font-size: 16px;
+  padding: 4px 8px;
+  font-size: 15px;
   border-radius: 6px;
 }
 
@@ -94,27 +94,31 @@ html, body, #app {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.10);
-  padding: 14px 12px;
+  padding: 10px 12px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   gap: 8px;
 }
 
-.routine-main { flex: 1; min-width: 0; }
+.routine-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
 
 .routine-title {
   font-weight: bold;
   font-size: 15px;
   word-break: break-all;
-  margin-bottom: 6px;
 }
 
 .routine-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin-bottom: 4px;
 }
 
 .tag {
@@ -132,9 +136,10 @@ html, body, #app {
 
 .routine-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 6px;
-  align-items: flex-end;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 /* =========================================================
