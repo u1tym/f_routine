@@ -7,9 +7,7 @@
  * The parent component handles the delete + create sequence.
  */
 import { ref, watch, computed } from 'vue';
-import type { Routine, Category, CreateRoutineBody, Adapt, Adjust, Avoid } from '../types';
-
-const WEEK_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
+import type { Routine, Category, CreateRoutineBody, Adapt, Adjust } from '../types';
 
 const props = defineProps<{
   visible: boolean;
