@@ -7,17 +7,19 @@ import type {
   ApplyResult,
 } from '../types';
 
+// Paths are relative to VITE_ROUTINE_ORIGIN (BASE_URL).
+// Do NOT include the /api prefix here; it is part of VITE_ROUTINE_ORIGIN.
 export const routineApi = {
-  list: () => api.get<Routine[]>('/api/routines'),
-  categories: () => api.get<Category[]>('/api/categories'),
+  list: () => api.get<Routine[]>('/routines'),
+  categories: () => api.get<Category[]>('/categories'),
   create: (body: CreateRoutineBody) =>
-    api.post<{ id: number }>('/api/routines', body),
+    api.post<{ id: number }>('/routines', body),
   update: (id: number, body: CreateRoutineBody) =>
-    api.put<{ id: number }>(`/api/routines/${id}`, body),
+    api.put<{ id: number }>(`/routines/${id}`, body),
   remove: (id: number) =>
-    api.delete<{ message: string }>(`/api/routines/${id}`),
+    api.delete<{ message: string }>(`/routines/${id}`),
   apply: (id: number, body: ApplyBody) =>
-    api.post<ApplyResult>(`/api/routines/${id}/apply`, body),
+    api.post<ApplyResult>(`/routines/${id}/apply`, body),
   applyAll: (body: ApplyBody) =>
-    api.post<ApplyResult>('/api/routines/apply-all', body),
+    api.post<ApplyResult>('/routines/apply-all', body),
 };
