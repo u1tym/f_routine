@@ -1,13 +1,47 @@
 <script setup lang="ts">
 /**
  * RoutineForm - Modal form for creating/editing a routine.
- *
- * NOTE: The API does not have a PUT endpoint for updating routines.
- * Editing is emulated by deleting the old routine and creating a new one.
- * The parent component handles the delete + create sequence.
+ * Create: POST /routines. Update: PUT /routines/{id}.
  */
 import { ref, watch, computed } from 'vue';
-import type { Routine, Category, CreateRoutineBody, Adapt, Adjust } from '../types';
+import type {
+  Routine,
+  Category,
+  CreateRoutineBody,
+  Adapt,
+  Adjust,
+  MonthlyAdaptFlags,
+} from '../types';
+
+const MONTH_ADAPT_KEYS = [
+  'adapt_jan',
+  'adapt_feb',
+  'adapt_mar',
+  'adapt_apr',
+  'adapt_may',
+  'adapt_jun',
+  'adapt_jul',
+  'adapt_aug',
+  'adapt_sep',
+  'adapt_oct',
+  'adapt_nov',
+  'adapt_dec',
+] as const satisfies readonly (keyof MonthlyAdaptFlags)[];
+
+const MONTH_LABELS = [
+  '1月',
+  '2月',
+  '3月',
+  '4月',
+  '5月',
+  '6月',
+  '7月',
+  '8月',
+  '9月',
+  '10月',
+  '11月',
+  '12月',
+] as const;
 
 const props = defineProps<{
   visible: boolean;
@@ -40,6 +74,9 @@ const useAdjust = ref(false);
 const avoidHoliday = ref(false);
 const avoidWeekdays = ref<boolean[]>([false, false, false, false, false, false, false]); // 0=Sun..6=Sat
 const altDir = ref<1 | -1>(1); // 1=forward, -1=backward
+
+// 各月にスケジュール反映するか（チェック OFF = その月は反映しない）
+const adaptMonths = ref<boolean[]>(Array.from({ length: 12 }, () => true));
 
 // error display
 const formError = ref('');
@@ -80,6 +117,9 @@ watch(
       avoidWeekdays.value = [false, false, false, false, false, false, false];
       altDir.value = 1;
     }
+    MONTH_ADAPT_KEYS.forEach((key, i) => {
+      adaptMonths.value[i] = target[key] ?? true;
+    });
   },
   { immediate: true }
 );
@@ -105,6 +145,7 @@ function resetForm() {
   avoidHoliday.value = false;
   avoidWeekdays.value = [false, false, false, false, false, false, false];
   altDir.value = 1;
+  adaptMonths.value = Array.from({ length: 12 }, () => true);
 }
 
 // ---------------------------------------------------------------------------
@@ -136,12 +177,20 @@ function buildAdjust(): Adjust | null {
   };
 }
 
+function buildMonthlyAdapt(): MonthlyAdaptFlags {
+  return MONTH_ADAPT_KEYS.reduce((acc, key, i) => {
+    acc[key] = adaptMonths.value[i];
+    return acc;
+  }, {} as MonthlyAdaptFlags);
+}
+
 function handleSubmit() {
   formError.value = '';
   if (!title.value.trim()) { formError.value = '名称を入力してください'; return; }
   if (!categoryId.value) { formError.value = 'カテゴリを選択してください'; return; }
 
   const body: CreateRoutineBody = {
+    ...buildMonthlyAdapt(),
     title: title.value.trim(),
     activity_category_id: categoryId.value,
     adapt: buildAdapt(),
@@ -211,6 +260,18 @@ function handleSubmit() {
                 {{ w }}曜日
               </option>
             </select>
+          </div>
+        </div>
+
+        <!-- 反映する月 -->
+        <div class="field">
+          <label class="field-label">スケジュールに反映する月</label>
+          <p class="field-hint">オフにした月は「反映」してもスケジュールは追加されません</p>
+          <div class="month-checks">
+            <label v-for="(label, i) in MONTH_LABELS" :key="label" class="checkbox-row">
+              <input type="checkbox" v-model="adaptMonths[i]" />
+              <span>{{ label }}</span>
+            </label>
           </div>
         </div>
 

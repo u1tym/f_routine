@@ -28,9 +28,27 @@ export interface Adjust {
 }
 
 // ---------------------------------------------------------------------------
+// 各月に反映するか（routine_adapt_day 由来。API 既定は true）
+// ---------------------------------------------------------------------------
+export interface MonthlyAdaptFlags {
+  adapt_jan: boolean;
+  adapt_feb: boolean;
+  adapt_mar: boolean;
+  adapt_apr: boolean;
+  adapt_may: boolean;
+  adapt_jun: boolean;
+  adapt_jul: boolean;
+  adapt_aug: boolean;
+  adapt_sep: boolean;
+  adapt_oct: boolean;
+  adapt_nov: boolean;
+  adapt_dec: boolean;
+}
+
+// ---------------------------------------------------------------------------
 // ルーティン
 // ---------------------------------------------------------------------------
-export interface Routine {
+export interface Routine extends MonthlyAdaptFlags {
   id: number;
   title: string;
   activity_category_id: number;
@@ -48,9 +66,9 @@ export interface Category {
 }
 
 // ---------------------------------------------------------------------------
-// POST /api/routines body
+// POST /routines / PUT /routines/{id} body
 // ---------------------------------------------------------------------------
-export interface CreateRoutineBody {
+export interface CreateRoutineBody extends MonthlyAdaptFlags {
   title: string;
   activity_category_id: number;
   adapt: Adapt;
