@@ -122,14 +122,21 @@ function adjustLabel(r: Routine): string {
   const dir = r.adjust.alt === 1 ? '後にずらす' : '前にずらす';
   return parts.length ? `除外: ${parts.join('、')} / ${dir}` : `除外なし / ${dir}`;
 }
+
+function goToMenu() {
+  window.location.assign('/mobile/login/#/menu');
+}
 </script>
 
 <template>
   <div class="page">
     <!-- Header -->
     <header class="app-header">
+      <button type="button" class="btn btn-header-back" @click="goToMenu">
+        メニューに戻る
+      </button>
       <h1 class="app-title">ルーティン管理</h1>
-      <button class="btn btn-primary" @click="openCreate">＋ 追加</button>
+      <button type="button" class="btn btn-primary" @click="openCreate">＋ 追加</button>
     </header>
 
     <!-- Global error -->
