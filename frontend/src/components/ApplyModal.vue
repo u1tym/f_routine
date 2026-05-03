@@ -63,7 +63,7 @@ defineExpose({ setResult, setError });
     <div v-if="visible" class="modal-overlay" @click.self="emit('close')">
       <div class="modal-sheet">
         <h2 class="modal-title">
-          {{ routineTitle ? `スケジュール追加：${routineTitle}` : '全ルーティン スケジュール追加' }}
+          {{ routineTitle ? `スケジュール追加：${routineTitle}` : '全ルーティン スケジュール適用' }}
         </h2>
 
         <div class="field">

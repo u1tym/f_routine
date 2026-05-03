@@ -63,14 +63,23 @@ html, body, #app {
 }
 
 .btn-header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
-  font-size: 13px;
-  padding: 7px 10px;
-  white-space: nowrap;
+  padding: 8px;
+  min-width: 40px;
+  min-height: 40px;
 }
 .btn-header-back:hover {
   background: rgba(255, 255, 255, 0.28);
+}
+
+.btn-header-back-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 /* =========================================================

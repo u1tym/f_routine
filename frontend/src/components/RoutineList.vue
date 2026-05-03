@@ -132,8 +132,19 @@ function goToMenu() {
   <div class="page">
     <!-- Header -->
     <header class="app-header">
-      <button type="button" class="btn btn-header-back" @click="goToMenu">
-        メニューに戻る
+      <button
+        type="button"
+        class="btn btn-header-back"
+        title="メニューに戻る"
+        aria-label="メニューに戻る"
+        @click="goToMenu"
+      >
+        <svg class="btn-header-back-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+          />
+        </svg>
       </button>
       <h1 class="app-title">ルーティン管理</h1>
       <button type="button" class="btn btn-primary" @click="openCreate">＋ 追加</button>
@@ -147,7 +158,7 @@ function goToMenu() {
 
     <!-- Apply all button -->
     <div class="apply-all-bar" v-if="routines.length">
-      <button class="btn btn-accent" @click="openApply(null)">全ルーティン スケジュール追加</button>
+      <button class="btn btn-accent" @click="openApply(null)">全ルーティン スケジュール適用</button>
     </div>
 
     <!-- Routine list -->
