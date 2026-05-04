@@ -7,12 +7,24 @@
   padding: 0;
 }
 
-html, body, #app {
+/* iOS Safari など: バウンス／オーバースクロールを抑止 */
+html {
   height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  height: 100%;
+  overscroll-behavior: none;
   font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Meiryo', sans-serif;
   font-size: 15px;
   background: #f5f5f5;
   color: #222;
+}
+
+#app {
+  height: 100%;
+  overscroll-behavior: none;
 }
 
 /* =========================================================
@@ -22,6 +34,7 @@ html, body, #app {
   max-width: 540px;
   margin: 0 auto;
   padding: 0 0 80px;
+  overscroll-behavior: none;
 }
 
 /* =========================================================
@@ -220,6 +233,7 @@ html, body, #app {
   max-width: 540px;
   max-height: 92vh;
   overflow-y: auto;
+  overscroll-behavior: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
